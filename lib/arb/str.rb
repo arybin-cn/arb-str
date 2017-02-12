@@ -20,7 +20,7 @@ module Arb
           end
         }.flatten
       end
-      #String#enum(wildcard,arg0,arg1,arg2,...)
+      #String#enum(wildcard,enumerator0,enumerator1,enumerator2,...)
       String.send :define_method, :enum do |*enumerators,&blk|
         return nil if enumerators.size < 1 
         return nil if enumerators[1..-1].map(&:to_s).include?(enumerators.first.to_s)
