@@ -1,5 +1,32 @@
 require "arb/str/version"
 
+
+
+# Examples:
+#
+#   String#enum:
+#     'http://?/?/?'.enum '?',%w{domain1 domain2},%w{pictures videos jokes},1..3
+#
+#      => ["http://domain1/pictures/1", 
+#          "http://domain1/pictures/2", 
+#          "http://domain1/pictures/3", 
+#          "http://domain1/videos/1", 
+#          "http://domain1/videos/2", 
+#          "http://domain1/videos/3", 
+#          "http://domain1/jokes/1", 
+#          "http://domain1/jokes/2",
+#          "http://domain1/jokes/3",
+#          "http://domain2/pictures/1",
+#          "http://domain2/pictures/2",
+#          "http://domain2/pictures/3",
+#          "http://domain2/videos/1",
+#          "http://domain2/videos/2",
+#          "http://domain2/videos/3",
+#          "http://domain2/jokes/1",
+#          "http://domain2/jokes/2",
+#          "http://domain2/jokes/3"]
+#
+
 module Arb
   module Str
     #Clean room here.
@@ -18,6 +45,8 @@ module Arb
             str_dup[index..index+wildcard.length-1]=item.to_s
             res<<o.send(e,str_dup,wildcard,enumerators.dup)
           end
+          #res.size==0 if the enumerator is empty(eg. [])
+          res<<str if res.size==0
         }.flatten
       end
       #String#enum(wildcard,enumerator0,enumerator1,enumerator2,...)
